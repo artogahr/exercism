@@ -13,14 +13,21 @@ pub fn secret(p: u64, b_pub: u64, a: u64) -> u64 {
 }
 
 pub fn modular_exp(base: u64, exponent: u64, modulus: u64) -> u64 {
-    let b = base as u128;
-    let e = exponent as u128;
-    let m = modulus as u128;
-    let mut c: u128 = 1;
-    let mut e1: u128 = 0;
-    while e1 < e {
-        e1 += 1;
-        c = (b * c) % m;
+    if modulus == 1 {
+        return 0;
     }
-    c as u64
+    let mut result = 1_u128;
+    let mut e = exponent as u128;
+    let mut b = base as u128;
+    let m = modulus as u128;
+    assert_ne!((m - 1).checked_mul(m - 1), None);
+    b = b % m;
+    while e > 0 {
+        if e % 2 == 1 {
+            result = (result * b) % m;
+        }
+        e = e >> 1;
+        b = (b * b) % m;
+    }
+    result as u64 % modulus
 }
