@@ -1,10 +1,10 @@
 /// Determines whether the supplied string is a valid ISBN number
 pub fn is_valid_isbn(isbn: &str) -> bool {
-    let isbn: String = isbn
-        .to_string()
-        .chars()
-        .filter(|c| c.is_numeric() || *c == 'X')
-        .collect();
+    let isbn: String = isbn.chars().filter(|c| *c != '-').collect();
+    if !isbn.chars().all(|c| c.is_numeric() || c == 'X') {
+        return false;
+    }
+
     if isbn.len() != 10 {
         return false;
     }
