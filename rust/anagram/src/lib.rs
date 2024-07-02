@@ -5,7 +5,7 @@ pub fn anagrams_for<'a>(word: &'a str, possible_anagrams: &'a [&str]) -> HashSet
     let word_lowercase: Vec<String> = word.chars().map(|c| c.to_lowercase().to_string()).collect();
     let mut word_sorted = word_lowercase.clone();
     word_sorted.sort();
-    dbg!(&word_sorted);
+
     for candidate in possible_anagrams {
         let candidate_lowercase: Vec<String> = candidate
             .chars()
@@ -16,7 +16,6 @@ pub fn anagrams_for<'a>(word: &'a str, possible_anagrams: &'a [&str]) -> HashSet
         }
         let mut candidate_sorted = candidate_lowercase;
         candidate_sorted.sort();
-        dbg!(&candidate_sorted);
         if word_sorted == candidate_sorted {
             found_words.insert(candidate);
             continue;
